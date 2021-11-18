@@ -1,0 +1,12 @@
+table user
+            "id"                integer primary key autoincrement,
+            "username"          text,
+            "email"             text,
+            "hashed_password":  text,
+
+
+table cryptos
+
+            "id"                integer primary key autoincrement,
+            "name"              text,
+            "owned"             text

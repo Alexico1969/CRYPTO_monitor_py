@@ -1,16 +1,26 @@
 from bitcoin import json
 from os import getenv, environ
-from flask import Flask, render_template, session, request, redirect, url_for, g
-from users import get_user, add_user, verify_user
+from flask import Flask, render_template, session, request, redirect, url_for,g
+from db import get_db, get_amounts_owned, create_tables, create_first_data, clear_table
 
 app = Flask(__name__)
 
 app.secret_key = 'Bruce Wayne is Batman'
 
+DATABASE = 'crypto.db'
+
+
+
 @app.route('/')
 def home_page():
+    clear_table()
+    create_tables()
+    create_first_data()
     print( 40 * "-")
     print()
+    amounts_owned = get_amounts_owned()
+    print(amounts_owned)
+    print(10*"--")
 
     data = json['data']
     for item in data:
@@ -33,6 +43,9 @@ def home_page():
 
 
     return render_template('home.html', json=json, page_title="Home", bitcoin=bitcoin, ethereum=ethereum, dogecoin=dogecoin)
+
+
+'''
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -78,6 +91,9 @@ def signup():
 def logout():
     session.pop('userid', None)
     return redirect(url_for('home_page'))
+
+
+'''
 
 # Do not alter this if statement below
 # This should stay towards the bottom of this file
