@@ -8,7 +8,7 @@
         {% for item in json.data %}
             
             {% if item.name == "Bitcoin" or item.name == "Ethereum" or item.name == "Dogecoin"%}
-                <div class="coin-div">
+                <div class="coin_div">
 
                     <p class="coin_title">{{item.name}}</p>
                     <br>
@@ -26,6 +26,20 @@
             {% endif %}
             
         {% endfor %}
+        <div class="total_div">
+            <p class="coin_title">Total</p>
+            <br>
+            <table class="coin_table">
+                <tr><th>Coin</th><th>Price</th><th></th><th>Owned</th><th></th><th>Total</th></tr>
+                <tr><td>Bitcoin</td><td id="bitcoin">{{bitcoin}}</td><td>x</td><td id="b_owned">1</td><td>=</td><td id="b_total">&#8364;&nbsp;0000</td></tr>
+                <tr><td>Ethereum</td><td id="ethereum">{{ethereum}}</td><td>x</td><td id="e_owned">2</td><td>=</td><td id="e_total">&#8364;&nbsp;0000</td></tr>
+                <tr><td>Dogecoin</td><td id="dogecoin">{{dogecoin}}</td><td>x</td><td id="d_owned">3</td><td>=</td><td id="d_total">&#8364;&nbsp;0000</td></tr>
+                
+            </table>
+            <div class="grand_total" id="grand_total">
+                0000
+            </div>
+        </div>
     </div>
 {% endblock %}
 
@@ -45,9 +59,95 @@
             } else {
                 $(this).css("background-color","coral");
             }
-
-
         });
+
+        function calculate_total(){
+            var bitcoin_price = $("#bitcoin").text();
+            var ethereum_price = $("#ethereum").text();
+            var dogecoin_price = $("#dogecoin").text();
+            /*var dogecoin_price = parseFloat($("#dogecoin").text());*/
+
+            var bitcoin_owned = parseFloat($("#b_owned").text());
+            var ethereum_owned = parseFloat($("#e_owned").text());
+            var dogecoin_owned = parseFloat($("#d_owned").text());
+
+            console.log("btc price:", bitcoin_price)
+            console.log("btc owned:", bitcoin_owned)
+            
+            console.log
+
+            console.log("doge price:", dogecoin_price)
+            console.log("doge owned:", dogecoin_owned)
+
+            var b_total = (bitcoin_price * bitcoin_owned).toFixed(2);
+            var e_total = (ethereum_price * ethereum_owned).toFixed(2);
+            var d_total = (dogecoin_price * dogecoin_owned).toFixed(2);
+
+            $("#b_total").text("€ " + b_total);
+            $("#e_total").text("€ " + e_total);
+            $("#d_total").text("€ " + d_total);
+
+            var grand_total = parseFloat(b_total) + parseFloat(e_total) + parseFloat(d_total);
+            grand_total = grand_total.toFixed(2);
+
+            $("#grand_total").text("€ " + grand_total);
+
+        }
+        
+        $("#b_owned").click(function(){
+            var bitcoin_owned = parseInt($("#b_owned").text());
+            let text;
+            let value = prompt("New value:", bitcoin_owned);
+            if (value == null || value == "") {
+                output = bitcoin_owned;
+            } else {
+                output = value;
+            }
+            $("#b_owned").text(value);
+            localStorage.setItem("bitcoin", value);
+            calculate_total();
+        });
+
+        $("#e_owned").click(function(){
+            var ethereum_owned = parseInt($("#e_owned").text());
+            let text;
+            let value = prompt("New value:", ethereum_owned);
+            if (value == null || value == "") {
+                output = ethereum_owned;
+            } else {
+                output = value;
+            }
+            $("#e_owned").text(value);
+            localStorage.setItem("ethereum", value);
+            calculate_total();
+        });
+
+        $("#d_owned").click(function(){
+            var dogecoin_owned = parseInt($("#d_owned").text());
+            let text;
+            let value = prompt("New value:", dogecoin_owned);
+            if (value == null || value == "") {
+                output = dogecoin_owned;
+            } else {
+                output = value;
+            }
+            $("#d_owned").text(value);
+            localStorage.setItem("dogecoin", value);
+            calculate_total();
+        });
+
+        window.onload = function(){
+       
+            b_current = localStorage.getItem("bitcoin");
+            e_current = localStorage.getItem("ethereum");
+            d_current = localStorage.getItem("dogecoin");
+
+            $("#b_owned").text(b_current);
+            $("#e_owned").text(e_current);
+            $("#d_owned").text(d_current);
+
+            calculate_total();
+        }
     </script>
     <script src="{{ url_for('static', filename='javascript/home.js') }}"></script>
 {% endblock %}

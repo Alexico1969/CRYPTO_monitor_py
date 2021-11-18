@@ -11,10 +11,28 @@ app.secret_key = 'Bruce Wayne is Batman'
 def home_page():
     print( 40 * "-")
     print()
-    print(json['data'])
+
+    data = json['data']
+    for item in data:
+        name = item['name']
+        if name == "Bitcoin":
+            temp = item['quote']['EUR']['price']
+            bitcoin = int(temp)
+            print(bitcoin)
+        elif name == "Ethereum":
+            temp = item['quote']['EUR']['price']
+            ethereum = int(temp)
+            print(ethereum)
+        elif name == "Dogecoin":
+            temp = item['quote']['EUR']['price']
+            dogecoin = int(temp*1000)/1000
+            print(dogecoin)
     print()
     print( 40 * "-")
-    return render_template('home.html', json=json, page_title="Home")
+
+
+
+    return render_template('home.html', json=json, page_title="Home", bitcoin=bitcoin, ethereum=ethereum, dogecoin=dogecoin)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():

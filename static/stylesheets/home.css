@@ -2,6 +2,7 @@
     Use this file to apply custom styling to the home.html template
 */
 
+
 .coin_title{
     font-weight : bold;
     font-size: 20px;
@@ -11,6 +12,7 @@
 .coin_table{
   font-family: Arial, Helvetica, sans-serif;
   border-collapse: collapse;
+  color : black;
 }
 
 .coin_table th, .coin_table td{
@@ -30,12 +32,28 @@
     display: flex;
 }
 
-.coin-div{
+.coin_div{
     margin: 20px;
     border: black 1px solid;
     padding: 20px;
+    background-color: rgba(50,50,50, 0.5);
+    color: beige;
 }
 
 .data_cel{
+    text-align: center;
+}
+
+.total_div{
+    margin: 20px;
+    border: black double 10px ;
+    padding: 20px;
+    background-color: rgba(30,30,30, 0.6);
+    color: beige;
+}
+
+.grand_total{
+    font-size: 80px;
+    color: beige;
     text-align: center;
 }
