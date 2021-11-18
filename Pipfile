@@ -12,6 +12,8 @@ flask = "*"
 libgravatar = "*"
 passlib = "*"
 livereload = "*"
+apikey = "*"
+requests = "*"
 
 [requires]
 python_version = "3.8"

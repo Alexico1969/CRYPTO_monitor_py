@@ -1,4 +1,4 @@
-
+from bitcoin import json
 from os import getenv, environ
 from flask import Flask, render_template, session, request, redirect, url_for, g
 from users import get_user, add_user, verify_user
@@ -9,7 +9,12 @@ app.secret_key = 'Bruce Wayne is Batman'
 
 @app.route('/')
 def home_page():
-    return render_template('home.html')
+    print( 40 * "-")
+    print()
+    print(json['data'])
+    print()
+    print( 40 * "-")
+    return render_template('home.html', json=json, page_title="Home")
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():

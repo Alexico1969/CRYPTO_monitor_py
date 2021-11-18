@@ -1,3 +1,41 @@
 /*
     Use this file to apply custom styling to the home.html template
 */
+
+.coin_title{
+    font-weight : bold;
+    font-size: 20px;
+    text-align: center;
+}
+
+.coin_table{
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+}
+
+.coin_table th, .coin_table td{
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+.coin_table tr{
+    background-color: #a2a2a2;
+}
+
+.coin_table tr:nth-child(even){
+    background-color: #c2c2c2;
+}
+
+.flex-container{
+    display: flex;
+}
+
+.coin-div{
+    margin: 20px;
+    border: black 1px solid;
+    padding: 20px;
+}
+
+.data_cel{
+    text-align: center;
+}

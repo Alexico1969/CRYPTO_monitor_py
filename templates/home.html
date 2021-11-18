@@ -1,26 +1,53 @@
 {% extends 'layout.html' %}
-
+<!--title>CRYPTO-monitor</title-->
 {% block content %}
-    <h3>templates/home.html</h3>
+    <link rel="stylesheet" href="static/stylesheets/home.css">
+    <h3>CRYPTO monitor</h3>
+    <br>
+    <div class="flex-container">
+        {% for item in json.data %}
+            
+            {% if item.name == "Bitcoin" or item.name == "Ethereum" or item.name == "Dogecoin"%}
+                <div class="coin-div">
+
+                    <p class="coin_title">{{item.name}}</p>
+                    <br>
+                    <table class="coin_table">
+                        <tr><th>Price: </th><th><span>{{item.quote.EUR.price}}</span></th></tr>
+                        <tr><td>1 hour: </td><td class="data_cel"><span>{{item.quote.EUR.percent_change_1h}}</span></td></tr>
+                        <tr><td>1 day: </td><td class="data_cel"><span>{{item.quote.EUR.percent_change_24h}}</span></td></tr>
+                        <tr><td>1 week: </td><td class="data_cel"><span>{{item.quote.EUR.percent_change_7d}}</span></td></tr>
+                        <tr><td>1 month: </td><td class="data_cel"><span>{{item.quote.EUR.percent_change_30d}}</span></td></tr>
+                        <tr><td>2 months: </td><td class="data_cel"><span>{{item.quote.EUR.percent_change_60d}}</span></td></tr>
+                        <tr><td>3 months: </td><td class="data_cel"><span>{{item.quote.EUR.percent_change_90d}}</span></td></tr>
+                    </table>
+                    <br>
+                </div>  
+            {% endif %}
+            
+        {% endfor %}
+    </div>
 {% endblock %}
 
 {% block scripts %}
     <script>
-    $(document).ready(function(){
-        console.log('--- js file loaded ---');
+        $('.data_cel').each(function(){
+            //if statement here 
+            // use $(this) to reference the current div in the loop
+            //you can try something like...
+            var text = $(this).text();
+            var value = parseFloat(text);
+            var new_value = value.toFixed(3);
+            $(this).text(new_value);
 
-        var content =  $.ajax({
-            url: "https://api.nasa.gov/planetary/apod?api_key=VM2f40EQQ0tk58nvmPhpVa6gthc5ma6Chgll56N7",
-            contentType: "application/json",
-            dataType: 'json',
-            success: function(result){
-                console.log(result);
+            if(value > 0){
+                $(this).css("background-color","lightgreen");
+            } else {
+                $(this).css("background-color","coral");
             }
 
 
-
-        })
-    })
+        });
     </script>
     <script src="{{ url_for('static', filename='javascript/home.js') }}"></script>
 {% endblock %}
