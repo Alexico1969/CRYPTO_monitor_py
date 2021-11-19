@@ -95,60 +95,8 @@
 
         }
         
-        /* making the amounts owned clickable --> change value pop-up*/
-        $("#b_owned").click(function(){
-            var bitcoin_owned = parseInt($("#b_owned").text());
-            let text;
-            let value = prompt("New value:", bitcoin_owned);
-            if (value == null || value == "") {
-                output = bitcoin_owned;
-            } else {
-                output = value;
-            }
-            $("#b_owned").text(value);
-            localStorage.setItem("bitcoin", value);
-            calculate_total();
-        });
-
-        $("#e_owned").click(function(){
-            var ethereum_owned = parseInt($("#e_owned").text());
-            let text;
-            let value = prompt("New value:", ethereum_owned);
-            if (value == null || value == "") {
-                output = ethereum_owned;
-            } else {
-                output = value;
-            }
-            $("#e_owned").text(value);
-            localStorage.setItem("ethereum", value);
-            calculate_total();
-        });
-
-        $("#d_owned").click(function(){
-            var dogecoin_owned = parseInt($("#d_owned").text());
-            let text;
-            let value = prompt("New value:", dogecoin_owned);
-            if (value == null || value == "") {
-                output = dogecoin_owned;
-            } else {
-                output = value;
-            }
-            $("#d_owned").text(value);
-            localStorage.setItem("dogecoin", value);
-            calculate_total();
-        });
-
         /* code executed after the page has been fully loaded */
         window.onload = function(){
-       
-            b_current = localStorage.getItem("bitcoin");
-            e_current = localStorage.getItem("ethereum");
-            d_current = localStorage.getItem("dogecoin");
-
-            $("#b_owned").text(b_current);
-            $("#e_owned").text(e_current);
-            $("#d_owned").text(d_current);
-
             calculate_total();
         }
     </script>
