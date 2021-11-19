@@ -15,7 +15,11 @@ def get_amounts_owned():
        select name, owned from cryptos;
     ''')
     data = result.fetchall()
-    return data
+    output = {}
+    for key, value in data:
+        output[key] = value
+    
+    return output
 
 def create_first_data():
     conn = get_db()

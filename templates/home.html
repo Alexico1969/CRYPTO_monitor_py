@@ -31,9 +31,9 @@
             <br>
             <table class="coin_table">
                 <tr><th>Coin</th><th>Price</th><th></th><th>Owned</th><th></th><th>Total</th></tr>
-                <tr><td>Bitcoin</td><td id="bitcoin">{{bitcoin}}</td><td>x</td><td id="b_owned">1</td><td>=</td><td id="b_total">&#8364;&nbsp;0000</td></tr>
-                <tr><td>Ethereum</td><td id="ethereum">{{ethereum}}</td><td>x</td><td id="e_owned">2</td><td>=</td><td id="e_total">&#8364;&nbsp;0000</td></tr>
-                <tr><td>Dogecoin</td><td id="dogecoin">{{dogecoin}}</td><td>x</td><td id="d_owned">3</td><td>=</td><td id="d_total">&#8364;&nbsp;0000</td></tr>
+                <tr><td>Bitcoin</td><td id="bitcoin">{{bitcoin}}</td><td>x</td><td id="b_owned">{{b_owned}}</td><td>=</td><td id="b_total">&#8364;&nbsp;0000</td></tr>
+                <tr><td>Ethereum</td><td id="ethereum">{{ethereum}}</td><td>x</td><td id="e_owned">{{e_owned}}</td><td>=</td><td id="e_total">&#8364;&nbsp;0000</td></tr>
+                <tr><td>Dogecoin</td><td id="dogecoin">{{dogecoin}}</td><td>x</td><td id="d_owned">{{d_owned}}</td><td>=</td><td id="d_total">&#8364;&nbsp;0000</td></tr>
                 
             </table>
             <div class="grand_total" id="grand_total">
@@ -45,6 +45,15 @@
 
 {% block scripts %}
     <script>
+
+        /* reload page every so many minutes */
+        setInterval(reloadPage, 900000);
+
+        function reloadPage(){
+            location.reload();
+        }
+
+        /* coloring cells red or green */
         $('.data_cel').each(function(){
             //if statement here 
             // use $(this) to reference the current div in the loop
@@ -61,23 +70,15 @@
             }
         });
 
+        /* function for calculating total value of krypto currency owned */
         function calculate_total(){
             var bitcoin_price = $("#bitcoin").text();
             var ethereum_price = $("#ethereum").text();
             var dogecoin_price = $("#dogecoin").text();
-            /*var dogecoin_price = parseFloat($("#dogecoin").text());*/
-
+            
             var bitcoin_owned = parseFloat($("#b_owned").text());
             var ethereum_owned = parseFloat($("#e_owned").text());
             var dogecoin_owned = parseFloat($("#d_owned").text());
-
-            console.log("btc price:", bitcoin_price)
-            console.log("btc owned:", bitcoin_owned)
-            
-            console.log
-
-            console.log("doge price:", dogecoin_price)
-            console.log("doge owned:", dogecoin_owned)
 
             var b_total = (bitcoin_price * bitcoin_owned).toFixed(2);
             var e_total = (ethereum_price * ethereum_owned).toFixed(2);
@@ -94,6 +95,7 @@
 
         }
         
+        /* making the amounts owned clickable --> change value pop-up*/
         $("#b_owned").click(function(){
             var bitcoin_owned = parseInt($("#b_owned").text());
             let text;
@@ -136,6 +138,7 @@
             calculate_total();
         });
 
+        /* code executed after the page has been fully loaded */
         window.onload = function(){
        
             b_current = localStorage.getItem("bitcoin");

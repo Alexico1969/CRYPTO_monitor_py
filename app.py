@@ -13,14 +13,16 @@ DATABASE = 'crypto.db'
 
 @app.route('/')
 def home_page():
-    clear_table()
-    create_tables()
-    create_first_data()
+    #clear_table()
+    #create_tables()
+    #create_first_data()
     print( 40 * "-")
     print()
     amounts_owned = get_amounts_owned()
-    print(amounts_owned)
-    print(10*"--")
+    b_owned = amounts_owned['bitcoin']
+    e_owned = amounts_owned['ethereum']
+    d_owned = amounts_owned['dogecoin']
+
 
     data = json['data']
     for item in data:
@@ -28,21 +30,27 @@ def home_page():
         if name == "Bitcoin":
             temp = item['quote']['EUR']['price']
             bitcoin = int(temp)
-            print(bitcoin)
         elif name == "Ethereum":
             temp = item['quote']['EUR']['price']
             ethereum = int(temp)
-            print(ethereum)
         elif name == "Dogecoin":
             temp = item['quote']['EUR']['price']
             dogecoin = int(temp*1000)/1000
-            print(dogecoin)
     print()
     print( 40 * "-")
 
 
 
-    return render_template('home.html', json=json, page_title="Home", bitcoin=bitcoin, ethereum=ethereum, dogecoin=dogecoin)
+    return render_template('home.html', 
+            json=json, 
+            page_title="Home", 
+            bitcoin=bitcoin, 
+            ethereum=ethereum, 
+            dogecoin=dogecoin, 
+            b_owned=b_owned,
+            e_owned=e_owned,
+            d_owned=d_owned
+            )
 
 
 '''
