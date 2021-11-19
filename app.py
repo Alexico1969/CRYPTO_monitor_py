@@ -53,6 +53,37 @@ def home_page():
             )
 
 
+@app.route('/update', methods=['GET', 'POST'])
+def update_page():
+    amounts_owned = get_amounts_owned()
+    b_owned = amounts_owned['bitcoin']
+    e_owned = amounts_owned['ethereum']
+    d_owned = amounts_owned['dogecoin']
+
+    data = json['data']
+    for item in data:
+        name = item['name']
+        if name == "Bitcoin":
+            temp = item['quote']['EUR']['price']
+            bitcoin = int(temp)
+        elif name == "Ethereum":
+            temp = item['quote']['EUR']['price']
+            ethereum = int(temp)
+        elif name == "Dogecoin":
+            temp = item['quote']['EUR']['price']
+            dogecoin = int(temp*1000)/1000
+
+    return render_template("update.html", 
+            json=json, 
+            page_title="Update", 
+            bitcoin=bitcoin, 
+            ethereum=ethereum, 
+            dogecoin=dogecoin, 
+            b_owned=b_owned,
+            e_owned=e_owned,
+            d_owned=d_owned
+            )
+
 '''
 
 @app.route('/login', methods=['GET', 'POST'])
