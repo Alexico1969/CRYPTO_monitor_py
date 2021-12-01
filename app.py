@@ -1,7 +1,7 @@
 from bitcoin import json
 from os import getenv, environ
 from flask import Flask, render_template, session, request, redirect, url_for,g
-from db import get_db, get_amounts_owned, create_tables, create_first_data, clear_table
+from db import get_db, get_amounts_owned, create_tables, create_first_data, clear_table, update_owned_amounts
 
 app = Flask(__name__)
 
@@ -72,6 +72,13 @@ def update_page():
         elif name == "Dogecoin":
             temp = item['quote']['EUR']['price']
             dogecoin = int(temp*1000)/1000
+
+    if request.method == "POST":
+        b_owned = request.form.get("b_update")
+        e_owned = request.form.get("e_update")
+        d_owned = request.form.get("d_update")
+
+        update_owned_amounts(b_owned, e_owned, d_owned)
 
     return render_template("update.html", 
             json=json, 

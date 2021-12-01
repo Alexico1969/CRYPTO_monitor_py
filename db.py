@@ -56,14 +56,13 @@ def clear_table():
                 ''')
     return
 
-def migrate_tables():
-    # Use this function to alter tables
-    pass
 
-def dump_database():
-    # This function dumps the database so that we have a backup
-    pass
-
-def load_backup_database():
-    # This function loads a backup of the database from a dump file
-    pass
+def update_owned_amounts(b_owned, e_owned, d_owned):
+    connection = get_db()
+    sql = connection.cursor()
+    sql.execute('''UPDATE cryptos set owned=? where name=?''', (b_owned, "bitcoin"))
+    connection.commit()
+    sql.execute('''UPDATE cryptos set owned=? where name=?''', (e_owned, "ethereum"))
+    connection.commit()
+    sql.execute('''UPDATE cryptos set owned=? where name=?''', (d_owned, "dogecoin"))
+    connection.commit()
