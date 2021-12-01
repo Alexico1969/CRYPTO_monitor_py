@@ -57,3 +57,23 @@
     color: beige;
     text-align: center;
 }
+
+button{
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    color: rgba(0, 0, 0, 0.8);
+    background-color: beige;
+    font-size: 18px;
+    border-radius: 5px;
+    padding: 5px 10px;
+    width: 70px;
+    border-style: none;
+    border: solid 2px beige;
+    margin-top: 10px;
+
+}
+
+.kladblok{
+    margin: 20px;
+    display: block;
+    text-align: center;
+}

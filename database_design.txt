@@ -1,12 +1,18 @@
 table user
-            "id"                integer primary key autoincrement,
-            "username"          text,
-            "email"             text,
-            "hashed_password":  text,
+            id                integer primary key autoincrement,
+            username          text,
+            email             text,
+            hashed_password:  text,
 
 
 table cryptos
 
-            "id"                integer primary key autoincrement,
-            "name"              text,
-            "owned"             text
+            id                integer primary key autoincrement,
+            name              text,
+            owned             text
+
+table   notes 
+
+	    notes_id INTEGER PRIMARY KEY AUTOINCREMENT,
+   	    note text NOT NULL,
+	    date text NOT NULL

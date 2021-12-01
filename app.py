@@ -1,7 +1,7 @@
 from bitcoin import json
 from os import getenv, environ
 from flask import Flask, render_template, session, request, redirect, url_for,g
-from db import get_db, get_amounts_owned, create_tables, create_first_data, clear_table, update_owned_amounts
+from db import get_db, get_amounts_owned, create_tables, create_first_data, clear_table, update_owned_amounts, update_notes, get_notes
 
 app = Flask(__name__)
 
@@ -11,7 +11,7 @@ DATABASE = 'crypto.db'
 
 
 
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 def home_page():
     #clear_table()
     #create_tables()
@@ -23,6 +23,8 @@ def home_page():
     e_owned = amounts_owned['ethereum']
     d_owned = amounts_owned['dogecoin']
 
+    notes = get_notes()
+    print("get_notes() = ", notes)
 
     data = json['data']
     for item in data:
@@ -39,7 +41,10 @@ def home_page():
     print()
     print( 40 * "-")
 
-
+    if request.method == "POST":
+        notes = request.form.get("message")
+        print("notes", notes)
+        update_notes(notes)
 
     return render_template('home.html', 
             json=json, 
@@ -49,7 +54,8 @@ def home_page():
             dogecoin=dogecoin, 
             b_owned=b_owned,
             e_owned=e_owned,
-            d_owned=d_owned
+            d_owned=d_owned,
+            notes=notes
             )
 
 

@@ -42,6 +42,16 @@
         </div>
         <br>
     </div>
+    <div class="kladblok">
+        <p class="coin_title">Notes</p>
+        <br>
+        <form method="POST">
+            <div class="notepad">
+                <textarea id="note-area" name="message" rows="8" cols="200">{{notes}}</textarea>
+            </div>
+            <button id="saveNoteBtn">Save</button>
+        </form>
+    </div>
 {% endblock %}
 
 {% block scripts %}
@@ -99,6 +109,10 @@
         /* code executed after the page has been fully loaded */
         window.onload = function(){
             calculate_total();
+        }
+
+        function loadNotes(){
+
         }
     </script>
     <script src="{{ url_for('static', filename='javascript/home.js') }}"></script>

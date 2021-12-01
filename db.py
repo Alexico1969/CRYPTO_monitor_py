@@ -1,5 +1,6 @@
 import sqlite3, os
 from flask import g
+from datetime import datetime
 
 DATABASE = 'crypto.db'
 
@@ -47,6 +48,13 @@ def create_tables():
 	    owned text NOT NULL
         )
     ''')
+    sql.execute('''
+        CREATE TABLE if not exists notes (
+	    notes_id INTEGER PRIMARY KEY AUTOINCREMENT,
+   	    note text NOT NULL,
+	    date text NOT NULL
+        )
+    ''')
 
 def clear_table():
     connection = get_db()
@@ -66,3 +74,23 @@ def update_owned_amounts(b_owned, e_owned, d_owned):
     connection.commit()
     sql.execute('''UPDATE cryptos set owned=? where name=?''', (d_owned, "dogecoin"))
     connection.commit()
+    return
+
+def update_notes(note):
+    connection = get_db()
+    sql = connection.cursor()
+    now = datetime.now()
+    dt_string = now.strftime("%d/%m/%Y %H:%M:%S")
+    sql.execute('''INSERT INTO notes (note, date) values (?,?)''', (note, dt_string))
+    connection.commit()
+    return
+
+def get_notes():
+    connection = get_db()
+    sql = connection.cursor()
+    result = sql.execute('''SELECT note FROM notes''')
+    output = ""
+    for row in result:
+        output = row[0]
+    print(output)
+    return output
