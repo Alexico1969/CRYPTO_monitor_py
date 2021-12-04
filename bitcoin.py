@@ -8,7 +8,7 @@ headers = {
 
 params = {
     'start' : '1', 
-    'limit' : '11', 
+    'limit' : '15', 
     'convert' : 'EUR'
 }
 
