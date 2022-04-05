@@ -36,6 +36,9 @@ def break_down(input):
     plt.xticks(xpos,labels)
     fig, ax = plt.subplots()
     plt.bar(xpos, values)
+    ax.set_title('Total Wallet Value chart')
+    ax.set_ylabel('Euros')
+    ax.legend()
 
     buf = BytesIO()
     fig.savefig(buf, format="png")

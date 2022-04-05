@@ -103,10 +103,12 @@ def update_page():
 
 @app.route("/chart")
 def chart():
-    notes = session.get('notes')
+    if session.get('notes'):
+        notes = session.get('notes')
+    else:
+        notes = get_notes()
     data = strip(notes)
     chart_string = break_down(data)
-    #print(f"*{data}*")
     return render_template("chart.html", chart=chart_string)
 
 
