@@ -92,5 +92,4 @@ def get_notes():
     output = ""
     for row in result:
         output = row[0]
-    print(output)
     return output

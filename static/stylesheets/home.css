@@ -77,3 +77,8 @@ button{
     display: block;
     text-align: center;
 }
+
+.center{
+    margin: auto;
+    text-align: center;
+}

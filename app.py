@@ -2,6 +2,7 @@ from bitcoin import json
 from os import getenv, environ
 from flask import Flask, render_template, session, request, redirect, url_for,g
 from db import get_db, get_amounts_owned, create_tables, create_first_data, clear_table, update_owned_amounts, update_notes, get_notes
+from helper import strip, break_down
 
 app = Flask(__name__)
 
@@ -24,9 +25,8 @@ def home_page():
     d_owned = amounts_owned['dogecoin']
 
     notes = get_notes()
-    print("get_notes() = ", notes)
-
     data = json['data']
+    
     for item in data:
         name = item['name']
         if name == "Bitcoin":
@@ -42,16 +42,18 @@ def home_page():
     print( 40 * "-")
 
     if request.method == "POST":
-        notes = request.form.get("message")
-        print("notes", notes)
-        update_notes(notes)
+        action = request.form.get("submit")
+        if action == "save":
+            notes = request.form.get("message")
+            update_notes(notes)
+            session['notes'] = notes
 
     return render_template('home.html', 
             json=json, 
             page_title="Home", 
             bitcoin=bitcoin, 
             ethereum=ethereum, 
-            dogecoin=dogecoin, 
+            dogecoin=dogecoin,
             b_owned=b_owned,
             e_owned=e_owned,
             d_owned=d_owned,
@@ -96,6 +98,17 @@ def update_page():
             e_owned=e_owned,
             d_owned=d_owned
             )
+
+
+
+@app.route("/chart")
+def chart():
+    notes = session.get('notes')
+    data = strip(notes)
+    chart_string = break_down(data)
+    #print(f"*{data}*")
+    return render_template("chart.html", chart=chart_string)
+
 
 '''
 

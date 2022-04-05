@@ -1,0 +1,70 @@
+{% extends 'layout.html' %}
+<!--title>CRYPTO-monitor</title-->
+{% block content %}
+    <link rel="stylesheet" href="static/stylesheets/home.css">
+    <h3>Chart</h3>
+    <br>
+    <div class="flex-container" class="center">
+        {{chart | safe}}
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script>
+
+        /* reload page every so many minutes */
+        setInterval(reloadPage, 900000);
+
+        function reloadPage(){
+            location.reload();
+        }
+
+        /* coloring cells red or green */
+        $('.data_cel').each(function(){
+            //if statement here 
+            // use $(this) to reference the current div in the loop
+            //you can try something like...
+            var text = $(this).text();
+            var value = parseFloat(text);
+            var new_value = value.toFixed(3);
+            $(this).text(new_value);
+
+            if(value > 0){
+                $(this).css("background-color","lightgreen");
+            } else {
+                $(this).css("background-color","coral");
+            }
+        });
+
+        /* function for calculating total value of krypto currency owned */
+        function calculate_total(){
+            var bitcoin_price = $("#bitcoin").text();
+            var ethereum_price = $("#ethereum").text();
+            var dogecoin_price = $("#dogecoin").text();
+            
+            var bitcoin_owned = parseFloat($("#b_owned").text());
+            var ethereum_owned = parseFloat($("#e_owned").text());
+            var dogecoin_owned = parseFloat($("#d_owned").text());
+
+            var b_total = (bitcoin_price * bitcoin_owned).toFixed(2);
+            var e_total = (ethereum_price * ethereum_owned).toFixed(2);
+            var d_total = (dogecoin_price * dogecoin_owned).toFixed(2);
+
+            $("#b_total").text("€ " + b_total);
+            $("#e_total").text("€ " + e_total);
+            $("#d_total").text("€ " + d_total);
+
+            var grand_total = parseFloat(b_total) + parseFloat(e_total) + parseFloat(d_total);
+            grand_total = grand_total.toFixed(2);
+
+            $("#grand_total").text("€ " + grand_total);
+
+        }
+        
+        /* code executed after the page has been fully loaded */
+        window.onload = function(){
+            calculate_total();
+        }
+    </script>
+    <script src="{{ url_for('static', filename='javascript/home.js') }}"></script>
+{% endblock %}
